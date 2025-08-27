@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dasari Kalyan — Portfolio</title>
+<meta name="description" content="Portfolio of Dasari Kalyan — Full-Stack / Frontend Developer" />
+<style>
+  :root{
+    --bg: #0b0f17;
+    --panel: rgba(255,255,255,0.06);
+    --text: #e5e7eb;
+    --muted:#9aa3af;
+    --brand:#7c3aed;
+    --brand-2:#06b6d4;
+    --ring: rgba(124,58,237,.45);
+    --card: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+    --shadow: 0 10px 30px rgba(0,0,0,.35);
+    --glass: backdrop-filter: blur(10px);
+  }
+  [data-theme="light"]{
+    --bg:#f8fafc; --panel: rgba(0,0,0,.04); --text:#0b1220; --muted:#475569;
+    --card: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.02));
+    --shadow: 0 10px 30px rgba(0,0,0,.08);
+    --ring: rgba(124,58,237,.25);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial;
+    color:var(--text); background:
+      radial-gradient(1200px 500px at 10% -10%, rgba(124,58,237,.20), transparent 60%),
+      radial-gradient(800px 400px at 110% 10%, rgba(6,182,212,.18), transparent 50%),
+      var(--bg);
+    scroll-behavior:smooth;
+  }
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1100px;margin:auto;padding:0 20px}
+  /* Header / Nav */
+  header{
+    position:sticky; top:0; z-index:50; backdrop-filter: blur(8px);
+    background: linear-gradient(180deg, rgba(0,0,0,.35), transparent);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between; padding:14px 0;
+  }
+  .brand{display:flex; gap:10px; align-items:center; font-weight:800; letter-spacing:.2px}
+  .logo{
+    width:36px; height:36px; border-radius:12px; background:
+      radial-gradient(80% 100% at 30% 20%, var(--brand), transparent 60%),
+      radial-gradient(80% 120% at 70% 80%, var(--brand-2), transparent 60%),
+      #111827; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), var(--shadow);
+  }
+  .nav ul{display:flex; gap:18px; list-style:none; padding:0; margin:0; align-items:center}
+  .nav a.link{padding:8px 12px;border-radius:10px;opacity:.9}
+  .nav a.link:hover{background:var(--panel)}
+  .btn{
+    display:inline-flex; gap:10px; align-items:center; border-radius:12px; padding:10px 14px;
+    background: var(--card); border:1px solid rgba(255,255,255,.08); box-shadow: var(--shadow);
+    transition:.2s transform, .2s box-shadow;
+  }
+  .btn:hover{transform: translateY(-2px); box-shadow: 0 14px 34px rgba(0,0,0,.35)}
+  .pill{padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:var(--panel)}
+  .theme-toggle{cursor:pointer}
+
+  /* Hero */
+  .hero{padding:64px 0 28px}
+  .tagline{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px}
+  .gradient-text{
+    background: linear-gradient(90deg, var(--brand), var(--brand-2));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero h1{font-size: clamp(28px, 5vw, 48px); line-height:1.1; margin:10px 0 14px}
+  .hero p{font-size: clamp(15px, 2vw, 18px); color:var(--muted); margin:0 0 18px}
+  .quick-cta{display:flex; gap:12px; flex-wrap:wrap}
+
+  /* Sections */
+  section{padding:34px 0}
+  .section-title{font-size:22px;margin:0 0 16px}
+  .grid{display:grid; gap:16px}
+  .grid.cols-3{grid-template-columns: repeat(3, minmax(0,1fr))}
+  .grid.cols-2{grid-template-columns: repeat(2, minmax(0,1fr))}
+  @media (max-width:900px){.grid.cols-3{grid-template-columns:1fr 1fr}}
+  @media (max-width:640px){.grid.cols-3,.grid.cols-2{grid-template-columns:1fr}}
+
+  .card{
+    border-radius:18px; background: var(--card); border:1px solid rgba(255,255,255,.08);
+    box-shadow: var(--shadow); overflow:hidden; position:relative;
+  }
+  .card .content{padding:16px}
+  .card .title{font-weight:700; font-size:18px; margin:2px 0 6px}
+  .card .muted{color:var(--muted); font-size:14px}
+
+  /* Chips / skill badges */
+  .chips{display:flex; flex-wrap:wrap; gap:8px}
+  .chip{padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:var(--panel); font-size:13px}
+
+  /* Experience timeline */
+  .timeline{position:relative; margin-left:10px}
+  .timeline:before{content:""; position:absolute; left:10px; top:0; bottom:0; width:2px; background: rgba(255,255,255,.08)}
+  .t-item{position:relative; margin-left:28px; padding:12px 0}
+  .t-item:before{
+    content:""; position:absolute; left:-20px; top:18px; width:10px; height:10px; border-radius:50%;
+    background: linear-gradient(90deg, var(--brand), var(--brand-2)); box-shadow: 0 0 0 4px rgba(124,58,237,.15);
+  }
+
+  /* Project image placeholder */
+  .thumb{
+    aspect-ratio: 16/9; background:
+      radial-gradient(70% 120% at 30% 20%, rgba(124,58,237,.4), transparent 60%),
+      radial-gradient(70% 120% at 70% 80%, rgba(6,182,212,.35), transparent 60%),
+      #0f172a; border-bottom:1px solid rgba(255,255,255,.08);
+  }
+
+  /* Footer */
+  footer{padding:40px 0 70px; color:var(--muted)}
+  .socials{display:flex; gap:10px; flex-wrap:wrap}
+
+  /* Reveal animations */
+  .reveal{opacity:0; transform: translateY(14px); transition: .6s ease}
+  .reveal.show{opacity:1; transform:none}
+
+  /* Active nav underline */
+  .link.active{box-shadow: inset 0 -2px 0 0 var(--brand-2)}
+  /* Focus ring */
+  :focus-visible{outline:2px solid var(--ring); outline-offset:2px; border-radius:10px}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <div style="font-size:14px; color:var(--muted)">Portfolio</div>
+        <div id="brandName">Your Name</div>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a class="link" href="#about">About</a></li>
+        <li><a class="link" href="#skills">Skills</a></li>
+        <li><a class="link" href="#experience">Experience</a></li>
+        <li><a class="link" href="#projects">Projects</a></li>
+        <li><a class="link" href="#education">Education</a></li>
+        <li><a class="link" href="#contact">Contact</a></li>
+        <li><button class="btn theme-toggle" id="themeToggle" aria-label="Toggle theme">🌓 Theme</button></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="tagline">
+      <span class="pill">Open to Work</span>
+      <span class="pill">Frontend • Full-Stack</span>
+      <span class="pill">India (IST)</span>
+    </div>
+    <h1>Hi, I’m <span class="gradient-text" id="heroName">Your Name</span> — I build fast, accessible web apps with delightful UX.</h1>
+    <p id="heroBlurb">
+      Full-stack developer with ~1.3 years of contract experience.
+      I love clean UI, crisp micro-interactions, and shipping features that matter.
+    </p>
+    <div class="quick-cta">
+      <a class="btn" id="resumeBtn" href="#" target="_blank" rel="noopener">📄 Download Résumé</a>
+      <a class="btn" href="#projects">🚀 View Projects</a>
+      <a class="btn" href="#contact">✉️ Contact</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="reveal">
+    <h2 class="section-title">About</h2>
+    <div class="card">
+      <div class="content">
+        <p id="aboutText">
+          I create modern, responsive UIs and solid backend APIs. Recently, I’ve worked on AI-assisted job portals, a roadside assistance app (oWR), and a Kanban tool using jQuery UI.
+          I enjoy learning, mentoring peers, and turning ideas into shipped features.
+        </p>
+        <div class="chips" id="aboutHighlights">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="reveal">
+    <h2 class="section-title">Skills</h2>
+    <div class="grid cols-3" id="skillsGrid"><!-- Filled by JS --></div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="reveal">
+    <h2 class="section-title">Experience</h2>
+    <div class="card">
+      <div class="content timeline" id="expTimeline">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="reveal">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap">
+      <h2 class="section-title">Projects</h2>
+      <div class="chips" id="projectFilters">
+        <button class="chip" data-filter="all">All</button>
+        <button class="chip" data-filter="frontend">Frontend</button>
+        <button class="chip" data-filter="fullstack">Full-Stack</button>
+        <button class="chip" data-filter="ai">AI</button>
+      </div>
+    </div>
+    <div class="grid cols-3" id="projectsGrid"><!-- Filled by JS --></div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education" class="reveal">
+    <h2 class="section-title">Education</h2>
+    <div class="grid cols-2" id="eduGrid"><!-- Filled by JS --></div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="reveal">
+    <h2 class="section-title">Contact</h2>
+    <div class="card">
+      <div class="content">
+        <p>Want to collaborate or have an opportunity? Reach out!</p>
+        <div class="socials" id="contactLinks">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="container">
+  <div>&copy; <span id="year"></span> <span id="footerName">Your Name</span>. Built with vanilla HTML+CSS+JS.</div>
+</footer>
+
+<script>
+  /* ========= 1) EDIT YOUR RESUME DATA HERE ========= */
+  const RESUME = {
+    name: "Dasari Kalyan",
+    title: "Frontend / Full-Stack Developer",
+    blurb:
+      "Full-stack developer with 1.3+ years of contract experience. Strong in HTML, CSS, JS, and Java. I love building clean UI with accessible, blazing-fast experiences.",
+    highlights: ["Clean UI", "Animations & micro-interactions", "Problem solving", "Mentoring peers"],
+    resumeUrl: "https://example.com/your-resume.pdf", // ⬅️ put your resume link (Drive/Cloud)
+    about:
+      "I build responsive, accessible web apps. Recent work includes an AI-assisted Job Portal with ATS, oWR (On Wheel Rescue) roadside assistance, GrainBites brand site, and a Kanban board using jQuery UI. I enjoy turning ideas into shipped features.",
+    skills: [
+      { group: "Frontend", items: ["HTML5", "CSS3", "JavaScript (ES6+)", "Responsive Design", "Accessibility (a11y)", "Bootstrap", "jQuery UI", "Tailwind (basic)"] },
+      { group: "Backend", items: ["Java", "REST APIs", "Node.js (basics)", "Express (basics)"] },
+      { group: "Tools", items: ["Git & GitHub", "CI/CD (concepts)", "VS Code", "Postman", "Gamma.app"] },
+      { group: "CS & Patterns", items: ["OOP", "Data Structures", "Design Patterns (GoF basics)", "Problem Solving"] },
+    ],
+    experience: [
+      {
+        role: "Frontend Developer (Contract)",
+        company: "Freelance",
+        period: "Jan 2024 – Aug 2025",
+        points: [
+          "Built responsive UIs with animations and clean component structure.",
+          "Delivered 10+ features across mini-projects and PoCs with on-time milestones.",
+          "Collaborated using GitHub workflows, code reviews, and issues."
+        ]
+      }
+    ],
+    projects: [
+      {
+        name: "AI Job Portal with ATS",
+        tags: ["fullstack","ai"],
+        desc: "Multi-role portal (Candidate/HR/Admin) with AI cover-letter generation and ATS-style filtering.",
+        link: "#", // replace with live URL
+        repo: "https://github.com/your-username/ai-job-portal"
+      },
+      {
+        name: "oWR — On Wheel Rescue",
+        tags: ["frontend"],
+        desc: "Roadside vehicle assistance app (frontend prototype) with location-first UX.",
+        link: "#",
+        repo: "https://github.com/your-username/owr"
+      },
+      {
+        name: "GrainBites",
+        tags: ["frontend"],
+        desc: "Brand site for healthy multigrain breakfast boxes. Neon accents & micro-interactions.",
+        link: "#",
+        repo: "https://github.com/your-username/grainbites"
+      },
+      {
+        name: "Kanban with jQuery UI",
+        tags: ["frontend"],
+        desc: "Draggable & sortable lanes, localStorage persistence, keyboard-friendly.",
+        link: "#",
+        repo: "https://github.com/your-username/kanban-jqueryui"
+      },
+      {
+        name: "CSS Animations Showcase",
+        tags: ["frontend"],
+        desc: "30 hover-triggered button/image/text effects with neon glow.",
+        link: "#",
+        repo: "https://github.com/your-username/css-animations-showcase"
+      },
+      {
+        name: "Online Review & Rating System",
+        tags: ["fullstack"],
+        desc: "User reviews, rating aggregation, basic moderation dashboard.",
+        link: "#",
+        repo: "https://github.com/your-username/review-rating-system"
+      }
+    ],
+    education: [
+      {
+        school: "Your University",
+        program: "B.Tech — Computer Science",
+        period: "2021 – 2025",
+        details: "Projects in web dev, DSA practice, mini-projects with HTML/CSS/JS."
+      }
+    ],
+    contact: {
+      email: "youremail@example.com",
+      phone: "+91-XXXXXXXXXX",
+      location: "India",
+      github: "https://github.com/your-username",
+      linkedin: "https://www.linkedin.com/in/your-link",
+      website: "https://your-portfolio-link.example.com"
+    }
+  };
+
+  /* ========= 2) RUNTIME LOGIC (no edits needed) ========= */
+  const $ = (sel, root=document)=>root.querySelector(sel);
+  const $$ = (sel, root=document)=>[...root.querySelectorAll(sel)];
+
+  // Fill basics
+  $("#brandName").textContent = RESUME.name;
+  $("#heroName").textContent = RESUME.name;
+  $("#footerName").textContent = RESUME.name;
+  $("#heroBlurb").textContent = RESUME.blurb;
+  $("#resumeBtn").href = RESUME.resumeUrl;
+  $("#aboutText").textContent = RESUME.about;
+  $("#year").textContent = new Date().getFullYear();
+
+  // About highlights
+  const aboutWrap = $("#aboutHighlights");
+  RESUME.highlights.forEach(h => {
+    const span = document.createElement("span");
+    span.className = "chip";
+    span.textContent = h;
+    aboutWrap.appendChild(span);
+  });
+
+  // Skills
+  const skillsGrid = $("#skillsGrid");
+  RESUME.skills.forEach(group=>{
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <div class="content">
+        <div class="title">${group.group}</div>
+        <div class="chips">${group.items.map(i=>`<span class="chip">${i}</span>`).join("")}</div>
+      </div>`;
+    skillsGrid.appendChild(card);
+  });
+
+  // Experience
+  const exp = $("#expTimeline");
+  RESUME.experience.forEach(item=>{
+    const div = document.createElement("div");
+    div.className = "t-item";
+    div.innerHTML = `
+      <div class="title">${item.role} — ${item.company}</div>
+      <div class="muted">${item.period}</div>
+      <ul style="margin:8px 0 0 18px">${item.points.map(p=>`<li>${p}</li>`).join("")}</ul>`;
+    exp.appendChild(div);
+  });
+
+  // Projects
+  const projGrid = $("#projectsGrid");
+  function renderProjects(filter="all"){
+    projGrid.innerHTML = "";
+    RESUME.projects
+      .filter(p=> filter==="all" ? true : p.tags.includes(filter))
+      .forEach(p=>{
+        const card = document.createElement("article");
+        card.className = "card project";
+        card.dataset.tags = p.tags.join(",");
+        card.innerHTML = `
+          <div class="thumb"></div>
+          <div class="content">
+            <div class="title">${p.name}</div>
+            <div class="muted" style="margin-bottom:10px">${p.desc}</div>
+            <div class="chips" style="margin-bottom:12px">
+              ${p.tags.map(t=>`<span class="chip">${t}</span>`).join("")}
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap">
+              <a class="btn" href="${p.link}" target="_blank" rel="noopener">🔗 Live</a>
+              <a class="btn" href="${p.repo}" target="_blank" rel="noopener">💻 Code</a>
+            </div>
+          </div>`;
+        projGrid.appendChild(card);
+      });
+  }
+  renderProjects();
+
+  // Project filters
+  $("#projectFilters").addEventListener("click", e=>{
+    const btn = e.target.closest(".chip");
+    if(!btn) return;
+    const filter = btn.dataset.filter;
+    renderProjects(filter);
+    $$("#projectFilters .chip").forEach(c=>c.style.boxShadow="");
+    btn.style.boxShadow = "inset 0 0 0 2px var(--brand-2)";
+  });
+
+  // Education
+  const eduGrid = $("#eduGrid");
+  RESUME.education.forEach(ed=>{
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <div class="content">
+        <div class="title">${ed.school}</div>
+        <div class="muted">${ed.program} • ${ed.period}</div>
+        <p style="margin-top:8px">${ed.details}</p>
+      </div>`;
+    eduGrid.appendChild(card);
+  });
+
+  // Contact links
+  const contact = $("#contactLinks");
+  const contactList = [
+    {label:"Email", href:`mailto:${RESUME.contact.email}`},
+    {label:"Phone", href:`tel:${RESUME.contact.phone}`},
+    {label:"GitHub", href:RESUME.contact.github},
+    {label:"LinkedIn", href:RESUME.contact.linkedin},
+    {label:"Website", href:RESUME.contact.website}
+  ];
+  contactList.forEach(c=>{
+    const a = document.createElement("a");
+    a.className = "btn"; a.href = c.href; a.target = "_blank"; a.rel="noopener";
+    a.textContent = c.label;
+    contact.appendChild(a);
+  });
+
+  // Theme toggle (persist in localStorage)
+  const root = document.documentElement;
+  const THEME_KEY = "dk_theme";
+  const saved = localStorage.getItem(THEME_KEY);
+  if(saved){ root.setAttribute("data-theme", saved); }
+  $("#themeToggle").addEventListener("click", ()=>{
+    const current = root.getAttribute("data-theme")==="light" ? "dark" : "light";
+    root.setAttribute("data-theme", current);
+    localStorage.setItem(THEME_KEY, current);
+  });
+  // Default dark
+  if(!root.hasAttribute("data-theme")) root.setAttribute("data-theme", "dark");
+
+  // Active nav highlight on scroll
+  const sections = ["about","skills","experience","projects","education","contact"].map(id=>$("#"+id));
+  const links = $$(".nav a.link");
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(ent=>{
+      if(ent.isIntersecting){
+        links.forEach(l=>l.classList.toggle("active", l.getAttribute("href")==="#"+ent.target.id));
+      }
+      if(ent.target.classList.contains("reveal") && ent.isIntersecting){
+        ent.target.classList.add("show");
+      }
+    });
+  }, { rootMargin:"-40% 0px -50% 0px", threshold:0.01 });
+  sections.forEach(s=>obs.observe(s));
+  $$(".reveal").forEach(el=>obs.observe(el));
+
+  // Smooth close mobile keyboard on hash nav (for mobile)
+  links.forEach(l=>l.addEventListener("click", ()=>document.activeElement.blur()));
+</script>
+</body>
+</html>
